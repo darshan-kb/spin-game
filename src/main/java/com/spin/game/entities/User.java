@@ -13,7 +13,7 @@ public class User {
     private String username;
     private String password;
     private String Roles;
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 
     public User() {
