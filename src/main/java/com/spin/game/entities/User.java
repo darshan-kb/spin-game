@@ -1,9 +1,8 @@
 package com.spin.game.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -14,6 +13,8 @@ public class User {
     private String username;
     private String password;
     private String Roles;
+    @OneToMany(mappedBy = "ticket")
+    private List<Ticket> tickets;
 
     public User() {
     }
@@ -55,5 +56,13 @@ public class User {
 
     public void setRoles(String roles) {
         Roles = roles;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }
