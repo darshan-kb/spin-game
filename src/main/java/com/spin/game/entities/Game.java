@@ -22,6 +22,15 @@ public class Game {
     public Game() {
     }
 
+    public Game(Date openTime, Date closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.openValue = openValue;
+        this.closeValue = closeValue;
+        this.totalAmount = totalAmount;
+        this.rewardAmount = rewardAmount;
+    }
+
     public Game(long gameId, Date openTime, Date closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
         this.gameId = gameId;
         this.openTime = openTime;
