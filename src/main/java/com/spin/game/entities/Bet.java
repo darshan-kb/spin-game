@@ -1,16 +1,14 @@
 package com.spin.game.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
+@Entity
 public class Bet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long betId;
     @ManyToOne
-    private Ticket ticketId;
+    private Ticket ticket;
     private int point;
     @ManyToOne
     private BetCategory betCategory;
@@ -18,9 +16,9 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(long betId, Ticket ticketId, int point, BetCategory betCategory) {
+    public Bet(long betId, Ticket ticket, int point, BetCategory betCategory) {
         this.betId = betId;
-        this.ticketId = ticketId;
+        this.ticket = ticket;
         this.point = point;
         this.betCategory = betCategory;
     }
@@ -34,11 +32,11 @@ public class Bet {
     }
 
     public Ticket getTicketId() {
-        return ticketId;
+        return ticket;
     }
 
     public void setTicketId(Ticket ticketId) {
-        this.ticketId = ticketId;
+        this.ticket = ticketId;
     }
 
     public int getPoint() {

@@ -3,6 +3,7 @@ package com.spin.game.entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Ticket {
@@ -19,6 +20,8 @@ public class Ticket {
     private Game game;
     @ManyToOne
     private User user;
+    @OneToMany(mappedBy = "ticket")
+    private List<Bet> bets;
 
     public Ticket() {
     }
@@ -29,6 +32,15 @@ public class Ticket {
         this.totalAmount = totalAmount;
         this.game = game;
         this.user = user;
+    }
+
+    public Ticket(long ticketId, Date timestamp, double totalAmount, Game game, User user, List<Bet> bets) {
+        this.ticketId = ticketId;
+        this.timestamp = timestamp;
+        this.totalAmount = totalAmount;
+        this.game = game;
+        this.user = user;
+        this.bets = bets;
     }
 
     public long getTicketId() {
@@ -69,5 +81,13 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
     }
 }
