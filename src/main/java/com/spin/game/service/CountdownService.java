@@ -17,4 +17,8 @@ public class CountdownService {
     public void countdownStart(){
 
     }
+
+    public int getVarCount(){
+        return varcount;
+    }
 }
