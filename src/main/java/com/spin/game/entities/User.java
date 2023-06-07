@@ -12,6 +12,9 @@ public class User {
     private long userId;
     private String username;
     private String password;
+    private String email;
+    private boolean locked;
+    private boolean enabled;
     private String Roles;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
@@ -23,6 +26,15 @@ public class User {
         this.userId = userId;
         this.username = username;
         this.password = password;
+        Roles = roles;
+    }
+
+    public User(String username, String password, String email, boolean locked, boolean enabled, String roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.locked = locked;
+        this.enabled = enabled;
         Roles = roles;
     }
 
@@ -70,5 +82,29 @@ public class User {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
