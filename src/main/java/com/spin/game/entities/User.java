@@ -30,6 +30,14 @@ public class User {
         Roles = roles;
     }
 
+    public User(String firstname, String lastname, String password, String email, String roles) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        Roles = roles;
+    }
+
     public User(String firstname, String lastname, String password, String email, boolean locked, boolean enabled, String roles) {
         this.firstname = firstname;
         this.lastname = lastname;
