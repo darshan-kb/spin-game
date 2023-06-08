@@ -14,8 +14,8 @@ public class User {
     private String lastname;
     private String password;
     private String email;
-    private boolean locked;
-    private boolean enabled;
+    private boolean locked = false;
+    private boolean enabled = false;
     private String Roles;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
