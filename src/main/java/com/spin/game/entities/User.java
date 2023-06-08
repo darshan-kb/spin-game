@@ -10,11 +10,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
-    private String username;
+    private String firstname;
+    private String lastname;
     private String password;
     private String email;
-    private boolean locked;
-    private boolean enabled;
+    private boolean locked = false;
+    private boolean enabled = false;
     private String Roles;
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
@@ -22,15 +23,16 @@ public class User {
     public User() {
     }
 
-    public User(long userId, String username, String password, String roles) {
+    public User(long userId, String firstname, String password, String roles) {
         this.userId = userId;
-        this.username = username;
+        this.firstname = firstname;
         this.password = password;
         Roles = roles;
     }
 
-    public User(String username, String password, String email, boolean locked, boolean enabled, String roles) {
-        this.username = username;
+    public User(String firstname, String lastname, String password, String email, boolean locked, boolean enabled, String roles) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.password = password;
         this.email = email;
         this.locked = locked;
@@ -38,8 +40,9 @@ public class User {
         Roles = roles;
     }
 
-    public User(String username, String password, String roles) {
-        this.username = username;
+    public User(String firstname, String lastname, String password, String roles) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.password = password;
         Roles = roles;
     }
@@ -52,12 +55,20 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstname(String firstnamename) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getPassword() {

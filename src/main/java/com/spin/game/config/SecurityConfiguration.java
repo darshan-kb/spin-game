@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private JpaUserDetailsService jpaUserDetailsService;
+    private final JpaUserDetailsService jpaUserDetailsService;
     public SecurityConfiguration(JpaUserDetailsService jpaUserDetailsService){
         this.jpaUserDetailsService = jpaUserDetailsService;
     }
@@ -22,10 +23,13 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/"))
-                .authorizeHttpRequests((requests)->requests
-                        .requestMatchers("/","/home").permitAll()
-                        .anyRequest().authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((requests) -> {
+                        requests.requestMatchers("/api").permitAll();
+                        requests.requestMatchers("/home").permitAll();
+                        requests.anyRequest().authenticated();
+                }
+                )
                 .userDetailsService(jpaUserDetailsService)
                 .httpBasic(Customizer.withDefaults())
                 .build();
