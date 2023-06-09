@@ -45,7 +45,7 @@ public class RegistrationService {
 
         confirmationTokenService.setConfirmedAt(token);
 
-        return signUpService.enableUser(confirmationToken.getUser().getEmail())==2 ? "confirmed" : "couldn't register";
+        return signUpService.enableUser(confirmationToken.getUser().getEmail())==1 ? "confirmed" : "couldn't register";
     }
 
 
