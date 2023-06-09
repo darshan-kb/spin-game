@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((requests) -> {
                         requests.requestMatchers("/api").permitAll();
                         requests.requestMatchers("/home").permitAll();
+                        requests.requestMatchers("/confirm").permitAll();
                         requests.anyRequest().authenticated();
                 }
                 )
