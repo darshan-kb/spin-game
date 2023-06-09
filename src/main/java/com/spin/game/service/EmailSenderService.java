@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class EmailSenderService implements EmailSender{
-    private final static Logger LOGGER = LoggerFactory.getLogger();
+    private final static Logger LOGGER = LoggerFactory.getLogger(EmailSenderService.class);
     private final JavaMailSender mailSender;
     @Override
     @Async
