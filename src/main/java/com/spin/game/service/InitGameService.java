@@ -5,9 +5,7 @@ import com.spin.game.repository.GameRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 public class InitGameService {
@@ -16,15 +14,10 @@ public class InitGameService {
     @Value("${countdown}")
     private int timeGap;
     public long gameInit(){
-        Calendar currentTimeNow = Calendar.getInstance();
-        Date openTime = currentTimeNow.getTime();
-        Date closeTime = timeAfterNMin(currentTimeNow,timeGap/60);
+        LocalDateTime openTime = LocalDateTime.now();
+        LocalDateTime closeTime = openTime.plusMinutes(timeGap/60);
         Game savedGame = gamerepo.save(new Game(openTime,closeTime,0,0,0.0,0.0));
         return savedGame.getGameId();
     }
 
-    public Date timeAfterNMin(Calendar currentTimeNow, int tmin){
-        currentTimeNow.add(Calendar.MINUTE, tmin);
-        return currentTimeNow.getTime();
-    }
 }

@@ -2,6 +2,7 @@ package com.spin.game.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -10,8 +11,8 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long gameId;
-    private Date openTime;
-    private Date closeTime;
+    private LocalDateTime openTime;
+    private LocalDateTime closeTime;
     private int openValue;
     private int closeValue;
     private double totalAmount;
@@ -22,7 +23,7 @@ public class Game {
     public Game() {
     }
 
-    public Game(Date openTime, Date closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
+    public Game(LocalDateTime openTime, LocalDateTime closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.openValue = openValue;
@@ -31,7 +32,7 @@ public class Game {
         this.rewardAmount = rewardAmount;
     }
 
-    public Game(long gameId, Date openTime, Date closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
+    public Game(long gameId, LocalDateTime openTime, LocalDateTime closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
         this.gameId = gameId;
         this.openTime = openTime;
         this.closeTime = closeTime;
@@ -49,19 +50,19 @@ public class Game {
         this.gameId = gameId;
     }
 
-    public Date getOpenTime() {
+    public LocalDateTime getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(Date openTime) {
+    public void setOpenTime(LocalDateTime openTime) {
         this.openTime = openTime;
     }
 
-    public Date getCloseTime() {
+    public LocalDateTime getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(Date closeTime) {
+    public void setCloseTime(LocalDateTime closeTime) {
         this.closeTime = closeTime;
     }
 
