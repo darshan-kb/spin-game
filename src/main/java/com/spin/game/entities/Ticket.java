@@ -2,6 +2,7 @@ package com.spin.game.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long ticketId;
 
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     private double totalAmount;
 
@@ -26,7 +27,7 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(long ticketId, Date timestamp, double totalAmount, Game game, User user) {
+    public Ticket(long ticketId, LocalDateTime timestamp, double totalAmount, Game game, User user) {
         this.ticketId = ticketId;
         this.timestamp = timestamp;
         this.totalAmount = totalAmount;
@@ -34,7 +35,7 @@ public class Ticket {
         this.user = user;
     }
 
-    public Ticket(long ticketId, Date timestamp, double totalAmount, Game game, User user, List<Bet> bets) {
+    public Ticket(long ticketId, LocalDateTime timestamp, double totalAmount, Game game, User user, List<Bet> bets) {
         this.ticketId = ticketId;
         this.timestamp = timestamp;
         this.totalAmount = totalAmount;
@@ -51,11 +52,11 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
