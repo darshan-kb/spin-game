@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                         requests.requestMatchers("/home").permitAll();
                         requests.requestMatchers("/confirm").permitAll();
                         requests.requestMatchers("/test/**").permitAll();
+                        requests.requestMatchers("/api/ticket/**").permitAll();
                         requests.anyRequest().authenticated();
                 }
                 )

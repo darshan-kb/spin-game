@@ -17,9 +17,9 @@ public class BetServiceImpl implements BetService{
     private BetCategoryRepository betCategoryRepository;
     @Override
     public String saveBet(List<TicketRecordModel> records, Ticket ticket) {
-        records.stream().map(ticketRecordModel -> {
-            return new Bet(ticket,ticketRecordModel.getBetValue(),betCategoryRepository.findById(ticketRecordModel.getBetCat()).get());
-        }).forEach(betRepository::save);
+        records.stream().map(ticketRecordModel ->
+                new Bet(ticket,ticketRecordModel.getBetValue(),betCategoryRepository.findById(ticketRecordModel.getBetCat()).get())
+        ).forEach(betRepository::save);
         return "Success";
     }
 }
