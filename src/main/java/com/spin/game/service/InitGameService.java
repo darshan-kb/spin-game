@@ -13,11 +13,10 @@ public class InitGameService {
     private GameRepo gamerepo;
     @Value("${countdown}")
     private int timeGap;
-    public long gameInit(){
+    public Game gameInit(){
         LocalDateTime openTime = LocalDateTime.now();
         LocalDateTime closeTime = openTime.plusMinutes(timeGap/60);
-        Game savedGame = gamerepo.save(new Game(openTime,closeTime,0,0,0.0,0.0));
-        return savedGame.getGameId();
+        return gamerepo.save(new Game(openTime,closeTime,0,0,0.0,0.0));
     }
 
 }

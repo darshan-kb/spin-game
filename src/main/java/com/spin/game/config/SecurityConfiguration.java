@@ -23,17 +23,18 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> {
                         requests.requestMatchers("/api/registration/**").permitAll();
                         requests.requestMatchers("/home").permitAll();
                         requests.requestMatchers("/confirm").permitAll();
                         requests.requestMatchers("/test/**").permitAll();
+                        requests.requestMatchers("/api/ticket/**").permitAll();
                         requests.anyRequest().authenticated();
                 }
                 )
                 .userDetailsService(jpaUserDetailsService)
                 .httpBasic(Customizer.withDefaults())
+                .formLogin(formlogin -> formlogin.loginPage("/login"))
                 .build();
     }
 

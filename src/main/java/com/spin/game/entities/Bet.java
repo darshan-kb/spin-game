@@ -23,6 +23,12 @@ public class Bet {
         this.betCategory = betCategory;
     }
 
+    public Bet(Ticket ticket, int point, BetCategory betCategory) {
+        this.ticket = ticket;
+        this.point = point;
+        this.betCategory = betCategory;
+    }
+
     public long getBetId() {
         return betId;
     }

@@ -44,6 +44,13 @@ public class Ticket {
         this.bets = bets;
     }
 
+    public Ticket(LocalDateTime timestamp, double totalAmount, Game game, User user) {
+        this.timestamp = timestamp;
+        this.totalAmount = totalAmount;
+        this.game = game;
+        this.user = user;
+    }
+
     public long getTicketId() {
         return ticketId;
     }
