@@ -15,7 +15,7 @@ public class TicketController {
     private TicketService ticketService;
     @PostMapping("/api/ticket/saveticket")
     public String saveTicket(@RequestBody TicketModel ticketModel){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return ticketService.saveTicket(auth.getPrincipal().toString(),ticketModel);
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        return ticketService.saveTicket(a.getName(),ticketModel);
     }
 }
