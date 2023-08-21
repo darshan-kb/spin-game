@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,4 +21,6 @@ public class JpaUserDetailsService implements UserDetailsService {
         return userRepository.findByEmail(email).map(SecurityUser::new)
                 .orElseThrow(()->new UsernameNotFoundException("Username not found : "+ email));
     }
+
+
 }
