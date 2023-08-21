@@ -50,6 +50,7 @@ public class SecurityConfiguration {
             a.anyRequest().authenticated();
         });
         return http.build();
+
     }
 
 //    private final JpaUserDetailsService jpaUserDetailsService;
