@@ -11,35 +11,20 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long gameId;
-    private LocalDateTime openTime;
-    private LocalDateTime closeTime;
-    private int openValue;
-    private int closeValue;
-    private double totalAmount;
-    private double rewardAmount;
+
+    private LocalDateTime gameTimeStamp;
+
+    private int resultValue;
+
     @OneToMany(mappedBy = "game")
     private List<Ticket> tickets;
 
     public Game() {
     }
 
-    public Game(LocalDateTime openTime, LocalDateTime closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.openValue = openValue;
-        this.closeValue = closeValue;
-        this.totalAmount = totalAmount;
-        this.rewardAmount = rewardAmount;
-    }
-
-    public Game(long gameId, LocalDateTime openTime, LocalDateTime closeTime, int openValue, int closeValue, double totalAmount, double rewardAmount) {
-        this.gameId = gameId;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.openValue = openValue;
-        this.closeValue = closeValue;
-        this.totalAmount = totalAmount;
-        this.rewardAmount = rewardAmount;
+    public Game(LocalDateTime gameTimeStamp, int resultValue) {
+        this.gameTimeStamp = gameTimeStamp;
+        this.resultValue = resultValue;
     }
 
     public long getGameId() {
@@ -50,51 +35,37 @@ public class Game {
         this.gameId = gameId;
     }
 
-    public LocalDateTime getOpenTime() {
-        return openTime;
+    public LocalDateTime getGameTimeStamp() {
+        return gameTimeStamp;
     }
 
-    public void setOpenTime(LocalDateTime openTime) {
-        this.openTime = openTime;
+    public void setGameTimeStamp(LocalDateTime gameTimeStamp) {
+        this.gameTimeStamp = gameTimeStamp;
     }
 
-    public LocalDateTime getCloseTime() {
-        return closeTime;
+    public int getResultValue() {
+        return resultValue;
     }
 
-    public void setCloseTime(LocalDateTime closeTime) {
-        this.closeTime = closeTime;
+    public void setResultValue(int resultValue) {
+        this.resultValue = resultValue;
     }
 
-    public int getOpenValue() {
-        return openValue;
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
-    public void setOpenValue(int openValue) {
-        this.openValue = openValue;
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
-    public int getCloseValue() {
-        return closeValue;
-    }
-
-    public void setCloseValue(int closeValue) {
-        this.closeValue = closeValue;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public double getRewardAmount() {
-        return rewardAmount;
-    }
-
-    public void setRewardAmount(double rewardAmount) {
-        this.rewardAmount = rewardAmount;
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", gameTimeStamp=" + gameTimeStamp +
+                ", resultValue=" + resultValue +
+                ", tickets=" + tickets +
+                '}';
     }
 }

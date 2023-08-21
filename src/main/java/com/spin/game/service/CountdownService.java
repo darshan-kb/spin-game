@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CountdownService {
 
     private SimpMessagingTemplate simptemplate;
@@ -32,7 +33,7 @@ public class CountdownService {
         }
 
         simptemplate.convertAndSend("/topic/countdown", new CountDownModel(varcount));
-
+        System.out.println(varcount);
         varcount -= 1;
 
 
