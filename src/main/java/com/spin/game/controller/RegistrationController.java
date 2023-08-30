@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
     private RegistrationService registrationService;
     private EmailSender emailSender;
-    @PostMapping(value = "/api/registration/signup", consumes = "application/json")
-    public String register(@RequestBody RegistrationRequest request){
-        return registrationService.register(request);
-    }
+//    @PostMapping(value = "/api/registration/signup", consumes = "application/json")
+//    public String register(@RequestBody RegistrationRequest request){
+//        return registrationService.register(request);
+//    }
 
-    @GetMapping("/api/registration/confirm")
-    public String confirm(@RequestParam("token") String token){
-        return registrationService.confirmToken(token);
-    }
+//
 
 
 }

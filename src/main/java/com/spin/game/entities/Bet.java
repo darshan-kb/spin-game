@@ -1,63 +1,43 @@
 package com.spin.game.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
 public class Bet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long betId;
     @ManyToOne
     private Ticket ticket;
-    private int point;
-    @ManyToOne
-    private BetCategory betCategory;
+    private int value;
+    private int amount;
+    private String betName;
 
     public Bet() {
     }
 
-    public Bet(long betId, Ticket ticket, int point, BetCategory betCategory) {
-        this.betId = betId;
+    public Bet(Ticket ticket, int value, int amount, String betName) {
         this.ticket = ticket;
-        this.point = point;
-        this.betCategory = betCategory;
+        this.value = value;
+        this.amount = amount;
+        this.betName = betName;
     }
 
-    public Bet(Ticket ticket, int point, BetCategory betCategory) {
-        this.ticket = ticket;
-        this.point = point;
-        this.betCategory = betCategory;
-    }
-
-    public long getBetId() {
-        return betId;
-    }
-
-    public void setBetId(long betId) {
-        this.betId = betId;
-    }
-
-    public Ticket getTicketId() {
-        return ticket;
-    }
-
-    public void setTicketId(Ticket ticketId) {
-        this.ticket = ticketId;
-    }
-
-    public int getPoint() {
-        return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    public BetCategory getBetCategory() {
-        return betCategory;
-    }
-
-    public void setBetCategory(BetCategory betCategory) {
-        this.betCategory = betCategory;
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "betId=" + betId +
+//                ", ticket=" + ticket +
+                ", value=" + value +
+                ", amount=" + amount +
+                ", betName='" + betName + '\'' +
+                '}';
     }
 }

@@ -10,17 +10,17 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JpaUserDetailsService implements UserDetailsService {
+public class JpaUserDetailsService {
     private final UserRepository userRepository;
 
     public JpaUserDetailsService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).map(SecurityUser::new)
-                .orElseThrow(()->new UsernameNotFoundException("Username not found : "+ email));
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        return userRepository.findByEmail(email).map(SecurityUser::new)
+//                .orElseThrow(()->new UsernameNotFoundException("Username not found : "+ email));
+//    }
 
 
 }

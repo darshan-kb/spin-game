@@ -6,6 +6,7 @@ import com.spin.game.model.TicketModel;
 import com.spin.game.model.TicketRecordModel;
 import com.spin.game.repository.BetCategoryRepository;
 import com.spin.game.repository.UserRepository;
+import com.spin.game.service.CalculateResultService;
 import com.spin.game.service.InitGameService;
 import com.spin.game.service.TicketService;
 import org.junit.jupiter.api.Test;
@@ -32,15 +33,18 @@ class GameApplicationTests {
 	@Autowired
 	TicketService ticketService;
 
+	@Autowired
+	CalculateResultService calculateResultService;
+
 	@Test
 	void contextLoads() {
 	}
 
 	@Test
 	void add100Values(){
-		for(int i=0;i<100;i++){
-			betrepo.save(new BetCategory(i));
-		}
+//		for(int i=0;i<100;i++){
+//			betrepo.save(new BetCategory(i));
+//		}
 	}
 
 	@Test
@@ -64,6 +68,11 @@ class GameApplicationTests {
 		lst.add(new TicketRecordModel(78,100));
 		TicketModel tm = new TicketModel();
 		tm.setTicketRecords(lst);
-		ticketService.saveTicket(email,tm);
+//		ticketService.saveTicket(email);
+	}
+
+	@Test
+	void getAllBets(){
+		calculateResultService.getCurrentGameResult(152);
 	}
 }

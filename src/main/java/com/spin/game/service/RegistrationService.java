@@ -15,41 +15,39 @@ public class RegistrationService {
     private final SignUpService signUpService;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
-    public String register(RegistrationRequest request){
+//    public String register(RegistrationRequest request){
 
-        String token = signUpService.signUpUser(
-                new User(
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getPassword(),
-                        request.getEmail(),
-                        "ROLE_USER"
-                )
-        );
-        String link ="http://localhost:8080/api/registration/confirm?token=" + token;
-        emailSender.send(request.getEmail(),buildEmail(request.getFirstName(),link),"Confirm your email");
-        return token;
-    }
+//        String token = signUpService.signUpUser(
+//                new User(
+//                        request.getFirstName(),
+//                        request.getLastName(),
+//                        request.getEmail()
+//                )
+//        );
+//        String link ="http://localhost:8080/api/registration/confirm?token=" + token;
+//        emailSender.send(request.getEmail(),buildEmail(request.getFirstName(),link),"Confirm your email");
+//        return token;
+//    }
 
-    @Transactional
-    public String confirmToken(String token){
-        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
-                .orElseThrow(()->new IllegalStateException("token not found"));
-
-        if(confirmationToken.getConfirmedAt()!=null){
-            throw new IllegalStateException("email already confirmed");
-        }
-
-        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
-
-        if(expiredAt.isBefore(LocalDateTime.now())){
-            throw new IllegalStateException("token expired");
-        }
-
-        confirmationTokenService.setConfirmedAt(token);
-
-        return signUpService.enableUser(confirmationToken.getUser().getEmail())==1 ? "confirmed" : "couldn't register";
-    }
+//    @Transactional
+//    public String confirmToken(String token){
+//        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
+//                .orElseThrow(()->new IllegalStateException("token not found"));
+//
+//        if(confirmationToken.getConfirmedAt()!=null){
+//            throw new IllegalStateException("email already confirmed");
+//        }
+//
+//        LocalDateTime expiredAt = confirmationToken.getExpiresAt();
+//
+//        if(expiredAt.isBefore(LocalDateTime.now())){
+//            throw new IllegalStateException("token expired");
+//        }
+//
+//        confirmationTokenService.setConfirmedAt(token);
+//
+//        return signUpService.enableUser(confirmationToken.getUser().getEmail())==1 ? "confirmed" : "couldn't register";
+//    }
 
 
     private String buildEmail(String name, String link) {
