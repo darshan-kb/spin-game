@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,23 +24,17 @@ public class TicketServiceImpl implements TicketService{
     private BetService betService;
     @Override
     @Transactional
-    public String saveTicket(String email, TicketModel ticketModel) {
+    public String saveTicket(String email, List<List<Integer>> boardValues) {
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isEmpty()){
             throw new IllegalStateException("user not found");
         }
         Game game = countdownService.getCurrentGame();
-        double totalAmt = calTotalAmt(ticketModel);
+        int totalAmt = boardValues.stream().flatMap((bv)->bv.stream()).reduce(0, (previousresult, element)-> previousresult + element);
         Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user.get()));
-        betService.saveBet(ticketModel.getTicketRecords(),t);
+        betService.saveBet(boardValues,t);
         return "success";
     }
 
-    public double calTotalAmt(TicketModel ticketModel){
-        double amt=0.0;
-        for(TicketRecordModel ticketRecordModel : ticketModel.getTicketRecords()){
-            amt+=ticketRecordModel.getBetValue();
-        }
-        return amt;
-    }
+
 }

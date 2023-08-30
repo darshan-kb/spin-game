@@ -98,4 +98,16 @@ public class Ticket {
     public void setBets(List<Bet> bets) {
         this.bets = bets;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "ticketId=" + ticketId +
+                ", timestamp=" + timestamp +
+                ", totalAmount=" + totalAmount +
+//                ", game=" + game +
+                ", user=" + user +
+                ", bets=" + bets +
+                '}';
+    }
 }

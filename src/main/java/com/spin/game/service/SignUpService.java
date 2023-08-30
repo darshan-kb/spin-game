@@ -21,23 +21,23 @@ public class SignUpService {
     ConfirmationTokenService confirmationTokenService;
 
 
-    public String signUpUser(User user){
-        Optional<User> dbUser = userRepository.findByEmail(user.getEmail());
-        if(dbUser.isPresent()) {
-            if(!dbUser.get().isEnabled()){
-                System.out.println("User activate the user");
-                return createTokenAndSave(dbUser.get());
-            }
-            throw new IllegalStateException("email already taken");
-        }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return createTokenAndSave(user);
-    }
+//    public String signUpUser(User user){
+//        Optional<User> dbUser = userRepository.findByEmail(user.getEmail());
+//        if(dbUser.isPresent()) {
+//            if(!dbUser.get().isEnabled()){
+//                System.out.println("User activate the user");
+//                return createTokenAndSave(dbUser.get());
+//            }
+//            throw new IllegalStateException("email already taken");
+//        }
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        userRepository.save(user);
+//        return createTokenAndSave(user);
+//    }
 
-    public int enableUser(String email) {
-        return userRepository.enableUser(email);
-    }
+//    public int enableUser(String email) {
+//        return userRepository.enableUser(email);
+//    }
 
     public String createTokenAndSave(User user){
         String token = UUID.randomUUID().toString();

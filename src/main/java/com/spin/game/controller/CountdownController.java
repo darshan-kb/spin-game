@@ -22,8 +22,13 @@ public class CountdownController {
 
     @GetMapping("/countdown")
     public CountDownModel CountdownSend(){
-        System.out.println("Here ");
+        //System.out.println("Here ");
         return new CountDownModel(countdownService.getVarCount());
+    }
+
+    @GetMapping("/result")
+    public int getResult(){
+        return countdownService.getResult();
     }
 
 }

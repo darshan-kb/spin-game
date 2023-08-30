@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 public class TicketModel {
 
+    private String betCategory;
+
     private List<TicketRecordModel> ticketRecords;
 
 }

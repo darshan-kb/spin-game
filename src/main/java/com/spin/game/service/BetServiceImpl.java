@@ -7,19 +7,34 @@ import com.spin.game.repository.BetCategoryRepository;
 import com.spin.game.repository.BetRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @AllArgsConstructor
 public class BetServiceImpl implements BetService{
 
+    private final List<String> betNames = List.of("single","vSplit","row","hSplit","corner","zero","half","dozen","mis","column");
+
     private BetRepository betRepository;
     private BetCategoryRepository betCategoryRepository;
     @Override
-    public String saveBet(List<TicketRecordModel> records, Ticket ticket) {
-        records.stream().map(ticketRecordModel ->
-                new Bet(ticket,ticketRecordModel.getBetValue(),betCategoryRepository.findById(ticketRecordModel.getBetCat()).get())
-        ).forEach(betRepository::save);
+    @Transactional
+    public String saveBet(List<List<Integer>> records, Ticket ticket) {
+        for(int i=0;i<records.size();i++){
+            for(int j=0;j<records.get(i).size();j++){
+                int amount = records.get(i).get(j);
+                if(amount>0) {
+                    Bet b = new Bet(ticket, j, amount, betNames.get(i));
+                    betRepository.save(b);
+                }
+            }
+        }
+        //records.stream().forEach((record) -> record.forEach());
+//        records.stream().map(ticketRecordModel ->
+//                new Bet(ticket,ticketRecordModel.getBetValue(),betCategoryRepository.findById(ticketRecordModel.getBetCat()).get())
+//        ).forEach(betRepository::save);
         return "Success";
     }
 }
