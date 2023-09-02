@@ -2,6 +2,7 @@ package com.spin.game.service;
 
 import com.spin.game.entities.Game;
 import com.spin.game.model.CountDownModel;
+import com.spin.game.repository.GameRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -20,6 +21,9 @@ public class CountdownService {
     private int varcount;
     private int result;
     private Game currentGame;
+
+    @Autowired
+    GameRepo gameRepo;
 
     private CalculateResultService calculateResultService;
     @Autowired
@@ -45,6 +49,8 @@ public class CountdownService {
 
         if(varcount == 10){
             result = calculateResultService.getCurrentGameResult(getCurrentGame().getGameId());
+            currentGame.setResultValue(result);
+            gameRepo.save(currentGame);
         }
 
 
@@ -52,6 +58,8 @@ public class CountdownService {
             varcount = countdown;
         }
     }
+
+
 
     public int getVarCount(){
         return varcount;
