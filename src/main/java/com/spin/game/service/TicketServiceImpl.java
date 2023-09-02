@@ -2,6 +2,7 @@ package com.spin.game.service;
 
 import com.spin.game.entities.*;
 import com.spin.game.exception.DrawCloseException;
+import com.spin.game.exception.UserNotFoundException;
 import com.spin.game.model.TicketModel;
 import com.spin.game.model.TicketRecordModel;
 import com.spin.game.repository.BetRepository;
@@ -26,16 +27,14 @@ public class TicketServiceImpl implements TicketService{
     @Override
     @Transactional
     public String saveTicket(String email, List<List<Integer>> boardValues) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()){
-            throw new IllegalStateException("user not found");
-        }
+        var user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
+
         if(countdownService.getVarCount()<=10)
             throw new DrawCloseException();
 
         Game game = countdownService.getCurrentGame();
         int totalAmt = boardValues.stream().flatMap((bv)->bv.stream()).reduce(0, (previousresult, element)-> previousresult + element);
-        Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user.get()));
+        Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user));
         betService.saveBet(boardValues,t);
         return "success";
     }
