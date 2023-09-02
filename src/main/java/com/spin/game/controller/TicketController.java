@@ -28,6 +28,6 @@ public class TicketController {
     public ResponseEntity<ApiResponse> saveTicket(@RequestBody List<List<Integer>> BoardValues){
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         ticketService.saveTicket(a.getName(),BoardValues);
-        return new ResponseEntity<ApiResponse>(new ApiResponse("ticket added", true), HttpStatus.OK);
+        return new ResponseEntity<ApiResponse>(new ApiResponse("ticket added successfully", true), HttpStatus.OK);
     }
 }
