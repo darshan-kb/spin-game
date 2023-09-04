@@ -15,6 +15,7 @@ public class Game {
     private LocalDateTime gameTimeStamp;
 
     private int resultValue;
+    private long totalAmount;
 
     @OneToMany(mappedBy = "game")
     private List<Ticket> tickets;
@@ -22,9 +23,10 @@ public class Game {
     public Game() {
     }
 
-    public Game(LocalDateTime gameTimeStamp, int resultValue) {
+    public Game(LocalDateTime gameTimeStamp, int resultValue, long totalAmount) {
         this.gameTimeStamp = gameTimeStamp;
         this.resultValue = resultValue;
+        this.totalAmount = getTotalAmount();
     }
 
     public long getGameId() {
@@ -57,6 +59,14 @@ public class Game {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    public long getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(long totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     @Override

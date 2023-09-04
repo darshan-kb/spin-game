@@ -1,16 +1,20 @@
 package com.spin.game;
 
 import com.spin.game.entities.BetCategory;
+import com.spin.game.entities.BetValuesMap;
 import com.spin.game.entities.User;
 import com.spin.game.model.TicketModel;
 import com.spin.game.model.TicketRecordModel;
 import com.spin.game.repository.BetCategoryRepository;
+import com.spin.game.repository.BetValuesMapRepository;
 import com.spin.game.repository.UserRepository;
 import com.spin.game.service.CalculateResultService;
 import com.spin.game.service.InitGameService;
 import com.spin.game.service.TicketService;
+import com.spin.game.serviceclass.ValueMap;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -35,6 +39,12 @@ class GameApplicationTests {
 
 	@Autowired
 	CalculateResultService calculateResultService;
+
+	@Autowired
+	ValueMap valueMap;
+	@Autowired
+	BetValuesMapRepository betValuesMap;
+
 
 	@Test
 	void contextLoads() {
@@ -74,5 +84,16 @@ class GameApplicationTests {
 	@Test
 	void getAllBets(){
 		calculateResultService.getCurrentGameResult(152);
+	}
+
+	@Test
+	void showValueMap(){
+		System.out.println(valueMap+"Here");
+	}
+
+	@Test
+	void secondLevelCache(){
+		calculateResultService.getElements("corner",2);
+		calculateResultService.getElements("corner",2);
 	}
 }
