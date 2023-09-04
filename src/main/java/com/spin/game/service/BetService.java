@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BetService {
     public String saveBet(List<List<Integer>> records, Ticket ticket);
+    public void addValueToValueMap(List<List<Integer>> records);
 }

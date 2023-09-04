@@ -6,6 +6,7 @@ import com.spin.game.exception.UserNotFoundException;
 import com.spin.game.model.TicketModel;
 import com.spin.game.model.TicketRecordModel;
 import com.spin.game.repository.BetRepository;
+import com.spin.game.repository.GameRepo;
 import com.spin.game.repository.TicketRepository;
 import com.spin.game.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,8 @@ public class TicketServiceImpl implements TicketService{
     private CountdownService countdownService;
     private TicketRepository ticketRepository;
     private BetService betService;
+    private GameRepo gameRepo;
+
     @Override
     @Transactional
     public String saveTicket(String email, List<List<Integer>> boardValues) {
@@ -33,9 +36,13 @@ public class TicketServiceImpl implements TicketService{
             throw new DrawCloseException();
 
         Game game = countdownService.getCurrentGame();
+        long gameTotalAmt = game.getTotalAmount();
         int totalAmt = boardValues.stream().flatMap((bv)->bv.stream()).reduce(0, (previousresult, element)-> previousresult + element);
         Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user));
         betService.saveBet(boardValues,t);
+        betService.addValueToValueMap(boardValues);
+        game.setTotalAmount(gameTotalAmt+totalAmt);
+        gameRepo.save(game);
         return "success";
     }
 

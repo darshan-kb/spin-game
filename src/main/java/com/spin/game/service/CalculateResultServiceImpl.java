@@ -4,7 +4,10 @@ import com.spin.game.entities.*;
 import com.spin.game.repository.BetCategoryRepository;
 import com.spin.game.repository.BetValuesMapRepository;
 import com.spin.game.repository.GameRepo;
+import com.spin.game.serviceclass.ValueMap;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,10 @@ public class CalculateResultServiceImpl implements CalculateResultService{
     private BetValuesMapRepository betValuesMapRepo;
     private BetCategoryRepository betCategoryRepo;
     private Random random;
-
+    private ValueMap valueMap;
+    private StaticDBValuesService staticValues;
+    //private CountdownService countdownService;
+    private final List<String> betNames = List.of("single","vSplit","row","hSplit","corner","zero","half","dozen","mis","column");
     @Override
     @Transactional
     public int getCurrentGameResult(long id) {
@@ -57,13 +63,55 @@ public class CalculateResultServiceImpl implements CalculateResultService{
         System.out.println(validElements);
         return validElements.get(rand);
     }
+    @Override
+    @Transactional
+    public int getCurrentGameResultByValueMap(long id){
+        List<Integer> validElements = new ArrayList<>();
+        long totalAmount = gameRepo.findById(id).orElseThrow(() -> new IllegalStateException("Game id not found")).getTotalAmount();
+        for(int i=0;i<37;i++){
+            double totalRewardOni=0.0;
+
+            for(String betName : betNames){
+                int[] betValueList = valueMap.getBetList(betName);
+                for(int j=0;j<betValueList.length;j++){
+                    if(betValueList[j]==0)
+                        continue;
+                    if(j==0 && betName.equals("single"))
+                        continue;
+                    List<Integer> elements = staticValues.getElements(betName,j);
+                    double payout = staticValues.getXTimes(betName);
+                    int amount = betValueList[j];
+                    if(elements.contains(i)){
+                        totalRewardOni += amount * payout;
+                    }
+                }
+            }
+            //System.out.println(totalRewardOni);
+            if(totalRewardOni <= totalAmount*1.0){
+                validElements.add(i);
+            }
+        }
+        int rand = random.nextInt(validElements.size());
+
+        System.out.println(validElements);
+        return validElements.get(rand);
+    }
+
 
     public List<Integer> getElements(Bet b){
         String betValues = betValuesMapRepo.getElements(b.getBetName(), b.getValue()).orElseThrow(() -> new IllegalStateException("bet is not correct"));
         return Arrays.stream(betValues.split(",")).map((s) -> Integer.parseInt(s)).collect(Collectors.toList());
     }
 
+    @Cacheable("betElementsCache")
+    public List<Integer> getElements(String betName, int betIndex){
+        System.out.println(betName+" "+betIndex);
+        String betValues = betValuesMapRepo.getElements(betName, betIndex).orElseThrow(() -> new IllegalStateException("bet is not correct"));
+        return Arrays.stream(betValues.split(",")).map((s) -> Integer.parseInt(s)).collect(Collectors.toList());
+    }
+    @Cacheable("betPayout")
     public double getXTimes(String betName){
+        System.out.println("betName : "+betName);
         return betCategoryRepo.getBetCatgoryByBetName(betName).getBetPayout();
     }
 }
