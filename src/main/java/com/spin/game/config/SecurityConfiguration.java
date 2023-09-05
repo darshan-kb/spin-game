@@ -45,6 +45,7 @@ public class SecurityConfiguration {
         );
         http.authorizeHttpRequests((a) -> {
             a.requestMatchers("/check/admin").hasRole("ADMIN");
+            a.requestMatchers("/sse").permitAll();
 //            a.requestMatchers("/countdown").permitAll();
 //            a.requestMatchers("/websocket").permitAll();
             a.anyRequest().authenticated();

@@ -28,6 +28,7 @@ public class CountdownController {
 
     @GetMapping("/result")
     public int getResult(){
+        System.out.println("In result controller");
         return countdownService.getResult();
     }
 
