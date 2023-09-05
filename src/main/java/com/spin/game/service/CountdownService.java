@@ -15,8 +15,6 @@ import java.util.Random;
 
 @Service
 public class CountdownService {
-
-    private SimpMessagingTemplate simptemplate;
     private final int countdown;
     private final int initcount;
     private int varcount;
@@ -27,13 +25,15 @@ public class CountdownService {
     @Autowired
     GameRepo gameRepo;
 
+    @Autowired
+    SseService sseService;
+
     private CalculateResultService calculateResultService;
     @Autowired
     private InitGameService initgame;
-    public CountdownService(@Value("${countdown}") int countdown, @Value("${initcount}") int initcount, SimpMessagingTemplate simptemplate, CalculateResultService calculateResultService){
+    public CountdownService(@Value("${countdown}") int countdown, @Value("${initcount}") int initcount, CalculateResultService calculateResultService){
         this.countdown = countdown;
         this.initcount = initcount;
-        this.simptemplate = simptemplate;
         varcount = countdown;
         this.calculateResultService = calculateResultService;
 
@@ -45,9 +45,11 @@ public class CountdownService {
             setCurrentGame(cGame);
             //valueMap = new ValueMap();
         }
-
-        simptemplate.convertAndSend("/topic/countdown", new CountDownModel(varcount));
+        sseService.sendEvents(varcount);
         System.out.println(varcount);
+        if(varcount==0){
+            sseService.sendResult(currentGame.getResultValue());
+        }
         varcount -= 1;
 
         if(varcount == 7){
