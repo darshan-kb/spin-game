@@ -1,7 +1,4 @@
 package com.spin.game.model;
-
-import org.springframework.messaging.core.MessagePostProcessor;
-
 public class CountDownModel {
     private int varcount;
     public CountDownModel(int varcount) {
