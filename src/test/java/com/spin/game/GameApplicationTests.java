@@ -16,13 +16,25 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @SpringBootTest
 class GameApplicationTests {
+
+	@Autowired
+	private OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
 
 	@Autowired
 	BetCategoryRepository betrepo;
@@ -48,6 +60,29 @@ class GameApplicationTests {
 
 	@Test
 	void contextLoads() {
+	}
+
+	@Test
+	String getToken(){
+		OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest
+				.withClientRegistrationId("2")
+				.principal("spin-client")
+				.build();
+
+		OAuth2AuthorizedClient client = oAuth2AuthorizedClientManager.authorize(request);
+		System.out.println(client.getAccessToken().getTokenValue());
+		return client.getAccessToken().getTokenValue();
+	}
+
+	@Test
+	public void test(){
+		RestTemplate restTemplate = new RestTemplate();
+		String resourseURL = "http://localhost:7070/account/balance/darshanbehere@gmail.com";
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add("Authorization","Bearer "+getToken());
+		HttpEntity<String> http = new HttpEntity<>(httpHeaders);
+		ResponseEntity<String> response = restTemplate.exchange(resourseURL, HttpMethod.GET, http, String.class);
+		System.out.println(response.getBody());
 	}
 
 	@Test
