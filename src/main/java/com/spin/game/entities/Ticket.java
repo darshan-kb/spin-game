@@ -21,7 +21,7 @@ public class Ticket {
     private Game game;
     @ManyToOne
     private User user;
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.REMOVE)
     private List<Bet> bets;
 
     public Ticket() {

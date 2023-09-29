@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RegistrationService {
     private final SignUpService signUpService;
-    private final ConfirmationTokenService confirmationTokenService;
+    //private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 //    public String register(RegistrationRequest request){
 

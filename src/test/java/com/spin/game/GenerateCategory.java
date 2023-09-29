@@ -80,7 +80,7 @@ public class GenerateCategory {
     }
     @Test
     public void singleIndexMapping(){
-        for(int i=1;i<=36;i++){
+        for(int i=0;i<=36;i++){
             bvmr.save(new BetValuesMap("single",i,""+i));
             //TwoValueCombination.add(i+"");
         }
@@ -92,6 +92,7 @@ public class GenerateCategory {
         int b=2;
         for(int i=0;i<12;i++){
             bvmr.save(new BetValuesMap("vSplit",i,a+","+b));
+            //System.out.println(a+","+b);
             a+=3;
             b+=3;
         }
@@ -100,6 +101,7 @@ public class GenerateCategory {
         b=1;
         for(int i=12;i<24;i++){
             bvmr.save(new BetValuesMap("vSplit",i,a+","+b));
+            //System.out.println(a+","+b);
             a+=3;
             b+=3;
         }
@@ -136,21 +138,24 @@ public class GenerateCategory {
         int b=6;
         for(int i=0;i<11;i++){
             bvmr.save(new BetValuesMap("hSplit",i,a+","+b));
+            //System.out.println(a+","+b);
             a+=3;
             b+=3;
         }
 
         a=2;
         b=5;
-        for(int i=11;i<23;i++){
+        for(int i=11;i<22;i++){
             bvmr.save(new BetValuesMap("hSplit",i,a+","+b));
+            //System.out.println(a+","+b);
             a+=3;
             b+=3;
         }
         a=1;
         b=4;
-        for(int i=23;i<33;i++){
+        for(int i=22;i<33;i++){
             bvmr.save(new BetValuesMap("hSplit",i,a+","+b));
+            //System.out.println(a+","+b);
             a+=3;
             b+=3;
         }
@@ -243,5 +248,10 @@ public class GenerateCategory {
             bvmr.save(new BetValuesMap("column",i,a+","+(a+1)+","+(a+2)));
             a+=3;
         }
+    }
+
+    @Test
+    public void zeroMapping(){
+        bvmr.save(new BetValuesMap("zero",0,"0"));
     }
 }

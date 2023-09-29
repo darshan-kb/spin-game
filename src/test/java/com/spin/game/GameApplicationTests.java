@@ -99,7 +99,7 @@ class GameApplicationTests {
 
 	@Test
 	void addUser(){
-		userRepository.save(new User("Arun","Dharme",passwordEncoder.encode("Arun@1212"),"arundharme@gmail.com",false,false,"ROLE_USER,ROLE_ADMIN"));
+		//userRepository.save(new User("Arun","Dharme",passwordEncoder.encode("Arun@1212"),"arundharme@gmail.com",false,false,"ROLE_USER,ROLE_ADMIN"));
 	}
 
 	@Test
