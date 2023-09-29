@@ -17,7 +17,7 @@ public class Game {
     private int resultValue;
     private long totalAmount;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     private List<Ticket> tickets;
 
     public Game() {

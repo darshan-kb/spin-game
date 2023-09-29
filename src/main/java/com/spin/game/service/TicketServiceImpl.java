@@ -26,10 +26,11 @@ public class TicketServiceImpl implements TicketService{
     private TicketRepository ticketRepository;
     private BetService betService;
     private GameRepo gameRepo;
+    private AccountDetailService accountDetailService;
 
     @Override
     @Transactional
-    public String saveTicket(String email, List<List<Integer>> boardValues) {
+    public double saveTicket(String email, List<List<Integer>> boardValues) {
         var user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
 
         if(countdownService.getVarCount()<=10)
@@ -38,12 +39,13 @@ public class TicketServiceImpl implements TicketService{
         Game game = countdownService.getCurrentGame();
         long gameTotalAmt = game.getTotalAmount();
         int totalAmt = boardValues.stream().flatMap((bv)->bv.stream()).reduce(0, (previousresult, element)-> previousresult + element);
+        double balance = accountDetailService.addTicket(totalAmt*10, email);
         Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user));
         betService.saveBet(boardValues,t);
         betService.addValueToValueMap(boardValues);
         game.setTotalAmount(gameTotalAmt+totalAmt);
         gameRepo.save(game);
-        return "success";
+        return balance;
     }
 
 

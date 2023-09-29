@@ -2,6 +2,7 @@ package com.spin.game.controller;
 
 import com.spin.game.model.TicketModel;
 import com.spin.game.payloads.ApiResponse;
+import com.spin.game.payloads.MessagePayload;
 import com.spin.game.service.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,9 +27,9 @@ public class TicketController {
         return "Hello from server";
     }
     @PostMapping("/api/ticket/saveticket")
-    public ResponseEntity<ApiResponse> saveTicket(@RequestBody List<List<Integer>> BoardValues){
-        Authentication a = SecurityContextHolder.getContext().getAuthentication();
-        ticketService.saveTicket(a.getName(),BoardValues);
-        return new ResponseEntity<ApiResponse>(new ApiResponse("ticket added successfully", true), HttpStatus.OK);
+    public ResponseEntity<MessagePayload> saveTicket(@RequestBody List<List<Integer>> BoardValues, Principal p){
+        System.out.println(p.getName());
+        double balance = ticketService.saveTicket(p.getName(),BoardValues);
+        return new ResponseEntity<MessagePayload>(new MessagePayload("Balance", Double.toString(balance)), HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.spin.game.error;
 
 import com.spin.game.exception.DrawCloseException;
+import com.spin.game.exception.InsufficientBalanceException;
 import com.spin.game.exception.UserNotFoundException;
 import com.spin.game.payloads.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,11 @@ public class RestResponseEntityExceptionHandler {
     public ResponseEntity<ApiResponse> handleUserNotFoundRequest(){
         ApiResponse apiResponse = new ApiResponse("User not found", false);
         return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<ApiResponse> handleInsufficientBalance(){
+        ApiResponse ar = new ApiResponse("Insufficient balance",false);
+        return new ResponseEntity<ApiResponse>(ar, HttpStatus.BAD_REQUEST);
     }
 }
