@@ -31,7 +31,7 @@ public class BetServiceImpl implements BetService{
     public String saveBet(List<List<Integer>> records, Ticket ticket) {
         for(int i=0;i<records.size();i++){
             for(int j=0;j<records.get(i).size();j++){
-                int amount = records.get(i).get(j);
+                int amount = records.get(i).get(j)*10;
                 if(amount>0) {
                     Bet b = new Bet(ticket, j, amount, betNames.get(i));
                     betRepository.save(b);
