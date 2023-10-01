@@ -79,6 +79,20 @@ public class GenerateCategory {
         }
     }
     @Test
+    public void betMap(){
+        singleIndexMapping();
+        vSplitMapping();
+        rowMapping();
+        hSplitMapping();
+        cornerMapping();
+        halfMapping();
+        dozenMapping();
+        misMapping();
+        columnMapping();
+        zeroMapping();
+
+    }
+    @Test
     public void singleIndexMapping(){
         for(int i=0;i<=36;i++){
             bvmr.save(new BetValuesMap("single",i,""+i));

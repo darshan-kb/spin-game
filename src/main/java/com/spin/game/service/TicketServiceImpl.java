@@ -39,12 +39,20 @@ public class TicketServiceImpl implements TicketService{
         Game game = countdownService.getCurrentGame();
         long gameTotalAmt = game.getTotalAmount();
         int totalAmt = boardValues.stream().flatMap((bv)->bv.stream()).reduce(0, (previousresult, element)-> previousresult + element);
-        double balance = accountDetailService.addTicket(totalAmt*10, email);
-        Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user));
-        betService.saveBet(boardValues,t);
-        betService.addValueToValueMap(boardValues);
-        game.setTotalAmount(gameTotalAmt+totalAmt);
-        gameRepo.save(game);
+        totalAmt*=10;
+        double balance = accountDetailService.addTicket(totalAmt, email);
+        try{
+            Ticket t = ticketRepository.save(new Ticket(LocalDateTime.now(),totalAmt,game,user));
+            betService.saveBet(boardValues,t);
+            betService.addValueToValueMap(boardValues);
+            game.setTotalAmount(gameTotalAmt+totalAmt);
+            gameRepo.save(game);
+        }
+        catch(RuntimeException e){
+            balance = accountDetailService.ticketError(totalAmt,email);
+            throw new RuntimeException();
+        }
+
         return balance;
     }
 
