@@ -51,7 +51,7 @@ public class BetServiceImpl implements BetService{
         //ValueMap valueMap = countdownService.getValueMap();
         for(int i=0;i<records.size();i++){
             for(int j=0;j<records.get(i).size();j++){
-                int amount = records.get(i).get(j);
+                int amount = records.get(i).get(j)*10;
                 if(amount>0) {
                     valueMap.addValueToIndex(betNames.get(i),j,amount);
                 }

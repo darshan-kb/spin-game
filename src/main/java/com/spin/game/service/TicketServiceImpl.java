@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService{
             gameRepo.save(game);
         }
         catch(RuntimeException e){
-            balance = accountDetailService.ticketError(totalAmt*10,email);
+            balance = accountDetailService.ticketError(totalAmt,email);
             throw new RuntimeException();
         }
 
