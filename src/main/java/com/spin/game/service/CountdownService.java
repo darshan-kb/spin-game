@@ -26,6 +26,8 @@ public class CountdownService {
 
     @Autowired
     SseService sseService;
+    @Autowired
+    ClaimService claimService;
 
     private CalculateResultService calculateResultService;
     @Autowired
@@ -47,6 +49,7 @@ public class CountdownService {
         sseService.sendEvents(varcount);
         System.out.println(varcount);
         if(varcount==0){
+            claimService.addClaim(currentGame.getResultValue(),getCurrentGame().getGameId());
             sseService.sendResult(currentGame.getResultValue());
         }
         varcount -= 1;
