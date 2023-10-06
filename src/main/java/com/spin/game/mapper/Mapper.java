@@ -8,7 +8,9 @@ public class Mapper {
         return ClaimDTO.builder()
                 .gameId(claim.getGame().getGameId())
                 .claimId(claim.getClaimBetId())
-                .amount(claim.getAmount())
+                .claimAmount(claim.getAmount())
+                .betAmount(claim.getBet().getAmount())
+                .betName(claim.getBet().getBetName())
                 .ticketId(claim.getTicket().getTicketId())
                 .build();
     }
