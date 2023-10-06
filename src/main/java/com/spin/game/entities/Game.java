@@ -19,6 +19,8 @@ public class Game {
 
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     private List<Ticket> tickets;
+    @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
+    private List<ClaimBet> claimBets;
 
     public Game() {
     }

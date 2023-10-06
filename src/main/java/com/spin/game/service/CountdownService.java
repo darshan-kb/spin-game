@@ -49,7 +49,7 @@ public class CountdownService {
         sseService.sendEvents(varcount);
         System.out.println(varcount);
         if(varcount==0){
-            claimService.addClaim(currentGame.getResultValue(),getCurrentGame().getGameId());
+            claimService.addClaim(currentGame.getResultValue(),getCurrentGame());
             sseService.sendResult(currentGame.getResultValue());
         }
         varcount -= 1;
