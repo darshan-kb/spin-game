@@ -36,12 +36,12 @@ public class AccountDetailService {
         ResponseEntity<String> response = restTemplate.getForEntity(resourseURL, String.class);
     }
 
-    public double addTicket(long amount, String email){
+    public double addTicket(long amount, String email, long ticketId){
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization","Bearer "+tokenService.getToken());
-        HttpEntity<String> entity = new HttpEntity(new AddTicketPayload(amount*1.0, email),headers);
+        HttpEntity<String> entity = new HttpEntity(new AddTicketPayload(amount*1.0, email, "ticketId:"+ticketId),headers);
 
         ResponseEntity<Double> response = restTemplate.exchange(addURL, HttpMethod.POST, entity, Double.class);
         System.out.println(response.getBody());
