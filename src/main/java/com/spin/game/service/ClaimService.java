@@ -70,9 +70,8 @@ public class ClaimService {
         headers.set("Authorization","Bearer "+tokenService.getToken());
         HttpEntity<String> entity = new HttpEntity(new AccountRedeemClaimPayload(email,claimBet.getAmount(),"claimId:"+claimId),headers);
         ResponseEntity<Double> response = restTemplate.exchange(redeemClaimURL, HttpMethod.POST, entity, Double.class);
-        System.out.println(response.getStatusCode());
-//        if(response.getStatusCode()!= HttpStatus.OK)
-//            throw new RuntimeException("unable to claim");
+        if(response.getStatusCode()!= HttpStatus.OK)
+            throw new RuntimeException("unable to claim");
         claimBet.setClaimed(true);
         claimBetRepository.save(claimBet);
         return "Claimed Successfully";
