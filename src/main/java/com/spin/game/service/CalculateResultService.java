@@ -8,4 +8,5 @@ public interface CalculateResultService {
     public int getCurrentGameResult(long id);
     public int getCurrentGameResultByValueMap(long id);
     public List<Integer> getElements(String betName, int Index);
+    public double getXTimes(String betName);
 }

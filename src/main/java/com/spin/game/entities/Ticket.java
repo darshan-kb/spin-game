@@ -23,6 +23,8 @@ public class Ticket {
     private User user;
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.REMOVE)
     private List<Bet> bets;
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.REMOVE)
+    private List<ClaimBet> claimBets;
 
     public Ticket() {
     }
