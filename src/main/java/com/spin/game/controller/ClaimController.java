@@ -25,7 +25,7 @@ public class ClaimController {
     }
 
     @PostMapping("/api/claims")
-    public ResponseEntity<String> claimReward(@RequestBody RedeemClaimPayload redeemClaimPayload, Principal p){
+    public ResponseEntity<Double> claimReward(@RequestBody RedeemClaimPayload redeemClaimPayload, Principal p){
         return new ResponseEntity<>(claimService.redeemClaim(redeemClaimPayload.getClaimId(),p.getName()),HttpStatus.OK);
     }
 }

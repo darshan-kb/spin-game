@@ -60,7 +60,7 @@ public class ClaimService {
     }
 
     @Transactional
-    public String redeemClaim(long claimId, String email){
+    public double redeemClaim(long claimId, String email){
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Email not found"));
         ClaimBet claimBet = claimBetRepository.findById(claimId).orElseThrow(() -> new IllegalStateException("ClaimId not found"));
         if(claimBet.isClaimed())
@@ -74,6 +74,6 @@ public class ClaimService {
             throw new RuntimeException("unable to claim");
         claimBet.setClaimed(true);
         claimBetRepository.save(claimBet);
-        return "Claimed Successfully";
+        return response.getBody();
     }
 }
