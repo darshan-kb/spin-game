@@ -18,7 +18,7 @@ import java.util.List;
 public class ReportController {
     @Autowired
     GameReportService gameReportService;
-    @GetMapping("/{page}")
+    @GetMapping("/ticket/{page}")
     public ResponseEntity<List<TicketReportDTO>> getTickets(@PathVariable Integer page, Principal principal){
         return new ResponseEntity<List<TicketReportDTO>>(gameReportService.getTickets(page,principal.getName()), HttpStatus.OK);
     }
