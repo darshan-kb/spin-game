@@ -1,9 +1,9 @@
 package com.spin.game.service;
 
-import com.spin.game.entities.Game;
-import com.spin.game.entities.Ticket;
-import com.spin.game.entities.User;
+import com.spin.game.dto.TicketReportDTO;
+import com.spin.game.entities.*;
 import com.spin.game.exception.UserNotFoundException;
+import com.spin.game.repository.ClaimBetRepository;
 import com.spin.game.repository.GameRepo;
 import com.spin.game.repository.TicketRepository;
 import com.spin.game.repository.UserRepository;
@@ -13,13 +13,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class GameReportServiceImpl implements GameReportService{
     private final GameRepo gameRepo;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
+    private final ClaimBetRepository claimBetRepository;
 
     @Override
     public List<Game> lastNGames(int n) {
@@ -28,10 +32,26 @@ public class GameReportServiceImpl implements GameReportService{
 
     @Override
     @Transactional
-    public List<Ticket> getTickets(int page, String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException());
+    public List<TicketReportDTO> getTickets(int page, String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         List<Ticket> tickets = ticketRepository.findAllByUser(user,PageRequest.of(page,5,Sort.by("timestamp").descending()));
-        return tickets;
+        List<TicketReportDTO> ticketReportDTOS = new ArrayList<>();
+        for(Ticket t : tickets){
+            for(Bet bet : t.getBets()){
+                Optional<ClaimBet> claimBet = claimBetRepository.findByBet(bet);
+                ticketReportDTOS.add(
+                        TicketReportDTO.builder()
+                                .ticketId(t.getTicketId())
+                                .timestamp(t.getTimestamp())
+                                .betId(bet.getBetId())
+                                .betAmount(bet.getAmount())
+                                .betName(bet.getBetName())
+                                .amountWon(claimBet.map(ClaimBet::getAmount).orElse(0.0))
+                                .build()
+                );
+            }
+        }
+        return ticketReportDTOS;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.spin.game;
 
+import com.spin.game.dto.TicketReportDTO;
 import com.spin.game.entities.BetCategory;
 import com.spin.game.entities.BetValuesMap;
 import com.spin.game.entities.Ticket;
@@ -70,7 +71,7 @@ class GameApplicationTests {
 	@Test
 	@Transactional
 	void getTicket(){
-		List<Ticket> tickets = gameReportService.getTickets(0,"darshanbehere@gmail.com");
+		List<TicketReportDTO> tickets = gameReportService.getTickets(0,"darshanbehere@gmail.com");
 		System.out.println(tickets);
 	}
 
