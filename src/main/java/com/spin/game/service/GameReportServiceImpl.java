@@ -34,7 +34,7 @@ public class GameReportServiceImpl implements GameReportService{
     @Transactional
     public List<TicketReportDTO> getTickets(int page, String email) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        List<Ticket> tickets = ticketRepository.findAllByUser(user,PageRequest.of(page,5,Sort.by("timestamp").descending()));
+        List<Ticket> tickets = ticketRepository.findAllByUser(user,PageRequest.of(page,10,Sort.by("timestamp").descending()));
         List<TicketReportDTO> ticketReportDTOS = new ArrayList<>();
         for(Ticket t : tickets){
             for(Bet bet : t.getBets()){
@@ -53,5 +53,12 @@ public class GameReportServiceImpl implements GameReportService{
         }
         return ticketReportDTOS;
     }
+
+    @Override
+    public long totalTickets(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        return ticketRepository.countByUser(user);
+    }
+
 
 }

@@ -22,4 +22,10 @@ public class ReportController {
     public ResponseEntity<List<TicketReportDTO>> getTickets(@PathVariable Integer page, Principal principal){
         return new ResponseEntity<List<TicketReportDTO>>(gameReportService.getTickets(page,principal.getName()), HttpStatus.OK);
     }
+
+    @GetMapping("/ticket/pages")
+    public ResponseEntity<Long> getTotalPages(Principal p){
+        long pages = (long) Math.ceil((gameReportService.totalTickets(p.getName())/10.0));
+        return new ResponseEntity<>(pages, HttpStatus.OK);
+    }
 }

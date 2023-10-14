@@ -10,4 +10,5 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
     List<Ticket> findAllByUser(User user, Pageable page);
+    long countByUser(User user);
 }

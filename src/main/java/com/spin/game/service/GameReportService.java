@@ -9,4 +9,5 @@ import java.util.List;
 public interface GameReportService {
     public List<Game> lastNGames(int n);
     public List<TicketReportDTO> getTickets(int page, String email);
+    public long totalTickets(String email);
 }
