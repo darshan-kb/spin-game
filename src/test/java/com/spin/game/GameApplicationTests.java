@@ -1,7 +1,9 @@
 package com.spin.game;
 
+import com.spin.game.dto.TicketReportDTO;
 import com.spin.game.entities.BetCategory;
 import com.spin.game.entities.BetValuesMap;
+import com.spin.game.entities.Ticket;
 import com.spin.game.entities.User;
 import com.spin.game.model.TicketModel;
 import com.spin.game.model.TicketRecordModel;
@@ -9,6 +11,7 @@ import com.spin.game.repository.BetCategoryRepository;
 import com.spin.game.repository.BetValuesMapRepository;
 import com.spin.game.repository.UserRepository;
 import com.spin.game.service.CalculateResultService;
+import com.spin.game.service.GameReportService;
 import com.spin.game.service.InitGameService;
 import com.spin.game.service.TicketService;
 import com.spin.game.serviceclass.ValueMap;
@@ -24,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -56,10 +60,19 @@ class GameApplicationTests {
 	ValueMap valueMap;
 	@Autowired
 	BetValuesMapRepository betValuesMap;
+	@Autowired
+	GameReportService gameReportService;
 
 
 	@Test
 	void contextLoads() {
+	}
+
+	@Test
+	@Transactional
+	void getTicket(){
+		List<TicketReportDTO> tickets = gameReportService.getTickets(0,"darshanbehere@gmail.com");
+		System.out.println(tickets);
 	}
 
 	@Test
