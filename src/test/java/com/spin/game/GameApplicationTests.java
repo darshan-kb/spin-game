@@ -9,6 +9,7 @@ import com.spin.game.model.TicketModel;
 import com.spin.game.model.TicketRecordModel;
 import com.spin.game.repository.BetCategoryRepository;
 import com.spin.game.repository.BetValuesMapRepository;
+import com.spin.game.repository.GameRepo;
 import com.spin.game.repository.UserRepository;
 import com.spin.game.service.CalculateResultService;
 import com.spin.game.service.GameReportService;
@@ -62,10 +63,17 @@ class GameApplicationTests {
 	BetValuesMapRepository betValuesMap;
 	@Autowired
 	GameReportService gameReportService;
+	@Autowired
+	GameRepo gameRepo;
 
 
 	@Test
 	void contextLoads() {
+	}
+
+	@Test
+	void getLatestGame(){
+		System.out.println(gameRepo.findLatestGame());
 	}
 
 	@Test
