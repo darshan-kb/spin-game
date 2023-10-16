@@ -75,6 +75,11 @@ class GameApplicationTests {
 	void getLatestGame(){
 		System.out.println(gameRepo.findLatestGame());
 	}
+	@Test
+	@Transactional
+	void getLatestTenGame(){
+		System.out.println(gameRepo.findLastTenGame());
+	}
 
 	@Test
 	@Transactional

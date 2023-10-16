@@ -10,9 +10,20 @@ import java.util.Optional;
 public interface GameRepo extends JpaRepository<Game, Long> {
 
     @Query("""
-            SELECT g from Game g
+            SELECT g FROM Game g
             WHERE
             g.gameTimeStamp = (SELECT MAX(g1.gameTimeStamp) FROM Game g1)
             """)
     Game findLatestGame();
+
+    @Query(
+            """
+                    SELECT g FROM Game g
+                    ORDER BY
+                    g.gameTimeStamp
+                    DESC
+                    LIMIT 10
+                    """
+    )
+    List<Game> findLastTenGame();
 }
