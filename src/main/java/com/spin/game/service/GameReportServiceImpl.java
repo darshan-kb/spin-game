@@ -1,5 +1,6 @@
 package com.spin.game.service;
 
+import com.spin.game.dto.GameRecordDTO;
 import com.spin.game.dto.TicketReportDTO;
 import com.spin.game.entities.*;
 import com.spin.game.exception.UserNotFoundException;
@@ -30,6 +31,7 @@ public class GameReportServiceImpl implements GameReportService{
         return gameRepo.findAll(PageRequest.of(0,n, Sort.by("gameTimeStamp").descending())).toList();
     }
 
+
     @Override
     @Transactional
     public List<TicketReportDTO> getTickets(int page, String email) {
@@ -58,6 +60,16 @@ public class GameReportServiceImpl implements GameReportService{
     public long totalTickets(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         return ticketRepository.countByUser(user);
+    }
+
+    @Override
+    public int lastGameResult() {
+        return gameRepo.findLatestGame().getResultValue();
+    }
+
+    @Override
+    public List<GameRecordDTO> lastTenGameRecord() {
+        return gameRepo.findLastTenGame().stream().map((i) -> new GameRecordDTO(i.getGameTimeStamp(),i.getResultValue())).toList();
     }
 
 

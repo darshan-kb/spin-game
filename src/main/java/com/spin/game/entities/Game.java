@@ -77,7 +77,6 @@ public class Game {
                 "gameId=" + gameId +
                 ", gameTimeStamp=" + gameTimeStamp +
                 ", resultValue=" + resultValue +
-                ", tickets=" + tickets +
                 '}';
     }
 }
