@@ -26,7 +26,7 @@ public class GameReportController {
 
     @GetMapping("/report/game/result")
     public ResponseEntity<Integer> gameResult(){
-        //System.out.println("Report controller");
+        System.out.println("Report controller "+gameReportService.lastGameResult());
         return new ResponseEntity<>(gameReportService.lastGameResult(), HttpStatus.OK);
     }
 }
