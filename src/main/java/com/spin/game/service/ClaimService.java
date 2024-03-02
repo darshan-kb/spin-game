@@ -31,6 +31,8 @@ public class ClaimService {
     private UserRepository userRepository;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private HttpRequestService httpRequestService;
     @Value("${redeemClaimURL}")
     private String redeemClaimURL;
 
@@ -65,15 +67,23 @@ public class ClaimService {
         ClaimBet claimBet = claimBetRepository.findById(claimId).orElseThrow(() -> new IllegalStateException("ClaimId not found"));
         if(claimBet.isClaimed())
             throw new IllegalStateException("Already claimed");
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization","Bearer "+tokenService.getToken());
-        HttpEntity<String> entity = new HttpEntity(new AccountRedeemClaimPayload(email,claimBet.getAmount(),"claimId:"+claimId),headers);
-        ResponseEntity<Double> response = restTemplate.exchange(redeemClaimURL, HttpMethod.POST, entity, Double.class);
+
+        AccountRedeemClaimPayload accountRedeemClaimPayload = new AccountRedeemClaimPayload(claimBet.getAmount(), "spin-claimId:"+claimId);
+        ResponseEntity<Double> response = httpRequestService.sendPostRequestToRedeemClaim(accountRedeemClaimPayload);
         if(response.getStatusCode()!= HttpStatus.OK)
             throw new RuntimeException("unable to claim");
         claimBet.setClaimed(true);
         claimBetRepository.save(claimBet);
         return response.getBody();
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Authorization","Bearer "+tokenService.getAuthTokenFromRequest());
+//        HttpEntity<String> entity = new HttpEntity(new AccountRedeemClaimPayload(email,claimBet.getAmount(),"claimId:"+claimId),headers);
+//        ResponseEntity<Double> response = restTemplate.exchange(redeemClaimURL, HttpMethod.POST, entity, Double.class);
+//        if(response.getStatusCode()!= HttpStatus.OK)
+//            throw new RuntimeException("unable to claim");
+//        claimBet.setClaimed(true);
+//        claimBetRepository.save(claimBet);
+//        return response.getBody();
     }
 }

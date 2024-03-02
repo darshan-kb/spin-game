@@ -1,5 +1,6 @@
 package com.spin.game.service;
 
+import com.spin.game.config.beans.Countdown;
 import com.spin.game.entities.*;
 import com.spin.game.exception.DrawCloseException;
 import com.spin.game.exception.UserNotFoundException;
@@ -27,13 +28,14 @@ public class TicketServiceImpl implements TicketService{
     private BetService betService;
     private GameRepo gameRepo;
     private AccountDetailService accountDetailService;
+    private Countdown countdown;
 
     @Override
     @Transactional
     public double saveTicket(String email, List<List<Integer>> boardValues) {
         var user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
 
-        if(countdownService.getVarCount()<=10)
+        if(countdown.getCountdown()<=10)
             throw new DrawCloseException();
 
         Game game = countdownService.getCurrentGame();
@@ -54,7 +56,7 @@ public class TicketServiceImpl implements TicketService{
 //        }
         double balance;
         try{
-            balance = accountDetailService.addTicket(totalAmt, email, t.getTicketId());
+            balance = accountDetailService.addTicket(totalAmt, t.getTicketId());
         }
         catch(Exception e){
             throw new RuntimeException("ticket is not created");

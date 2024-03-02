@@ -1,6 +1,8 @@
 package com.spin.game.service;
 
+import com.spin.game.config.beans.ResultQueue;
 import com.spin.game.entities.*;
+import com.spin.game.payloads.QueuePayload;
 import com.spin.game.repository.BetCategoryRepository;
 import com.spin.game.repository.BetValuesMapRepository;
 import com.spin.game.repository.GameRepo;
@@ -23,6 +25,7 @@ public class CalculateResultServiceImpl implements CalculateResultService{
     private Random random;
     private ValueMap valueMap;
     private StaticDBValuesService staticValues;
+    private ResultQueue resultQueue;
     //private CountdownService countdownService;
     private final List<String> betNames = List.of("single","vSplit","row","hSplit","corner","zero","half","dozen","mis","column");
     @Override
@@ -113,5 +116,17 @@ public class CalculateResultServiceImpl implements CalculateResultService{
     public double getXTimes(String betName){
         System.out.println("betName : "+betName);
         return betCategoryRepo.getBetCatgoryByBetName(betName).getBetPayout();
+    }
+
+    @Transactional
+    public void markGameAsOver(Game game){
+        game.setGameOver(true);
+        gameRepo.save(game);
+    }
+
+    @Override
+    public void updateQueue(Game game) {
+        resultQueue.pop();
+        resultQueue.push(new QueuePayload(game.getResultValue(),game.getGameTimeStamp()));
     }
 }
