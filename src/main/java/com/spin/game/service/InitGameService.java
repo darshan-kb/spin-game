@@ -1,5 +1,6 @@
 package com.spin.game.service;
 
+import com.spin.game.config.beans.ResultQueue;
 import com.spin.game.entities.Game;
 import com.spin.game.repository.GameRepo;
 import com.spin.game.serviceclass.ValueMap;
@@ -16,6 +17,8 @@ public class InitGameService {
     private GameRepo gamerepo;
     @Autowired
     private ValueMap valueMap;
+    @Autowired
+    private ResultQueue resultQueue;
 
     @Value("${countdown}")
     private int timeGap;
@@ -23,6 +26,8 @@ public class InitGameService {
     public Game gameInit(){
         LocalDateTime startTime = LocalDateTime.now();
         valueMap.initializeValueMap();
+        if(resultQueue.getQueue().isEmpty())
+            resultQueue.initializeQueue(gamerepo.fetchTop5GameOverRow());
         return gamerepo.save(new Game(startTime,0,0));
     }
 

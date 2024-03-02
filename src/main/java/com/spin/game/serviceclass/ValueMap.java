@@ -7,16 +7,18 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Getter
 @Setter
 @Component
 public class ValueMap {
 
     //List.of("single","vSplit","row","hSplit","corner","zero","half","dozen","mis","column");
-    private HashMap<String, int[]> valueMap;
+    private ConcurrentHashMap<String, int[]> valueMap;
     public ValueMap(){
 
-        valueMap = new HashMap<>();
+        valueMap = new ConcurrentHashMap<>();
         initializeValueMap();
     }
 

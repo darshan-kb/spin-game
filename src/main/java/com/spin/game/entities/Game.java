@@ -16,7 +16,7 @@ public class Game {
 
     private int resultValue;
     private long totalAmount;
-
+    private boolean isGameOver;
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
     private List<Ticket> tickets;
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
@@ -69,6 +69,14 @@ public class Game {
 
     public void setTotalAmount(long totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        isGameOver = gameOver;
     }
 
     @Override

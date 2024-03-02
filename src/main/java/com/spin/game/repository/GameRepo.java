@@ -1,11 +1,11 @@
 package com.spin.game.repository;
 
 import com.spin.game.entities.Game;
+import com.spin.game.model.projection.GameResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface GameRepo extends JpaRepository<Game, Long> {
 
@@ -26,4 +26,7 @@ public interface GameRepo extends JpaRepository<Game, Long> {
                     """
     )
     List<Game> findLastTenGame();
+
+    @Query("SELECT g FROM Game g WHERE g.isGameOver=true ORDER BY g.gameTimeStamp DESC LIMIT 5")
+    List<GameResult> fetchTop5GameOverRow();
 }

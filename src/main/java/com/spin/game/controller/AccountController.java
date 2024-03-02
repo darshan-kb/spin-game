@@ -21,11 +21,11 @@ public class AccountController {
     AccountDetailService accountDetailService;
     @Autowired
     SignUpService signUpService;
-    @GetMapping("/account/balance")
-    public ResponseEntity<Double> getAccountBalance(Principal p){
-        double balance = accountDetailService.getBalance(p.getName());
-        return ResponseEntity.ok(balance);
-    }
+//    @GetMapping("/account/balance")
+//    public ResponseEntity<Double> getAccountBalance(Principal p){
+//        double balance = accountDetailService.getBalance(p.getName());
+//        return ResponseEntity.ok(balance);
+//    }
     @PostMapping("/account")
     public ResponseEntity<UserDTO> createAccount(@RequestBody UserDTO user){
         return new ResponseEntity<UserDTO>(signUpService.signUpUser(user), HttpStatus.OK);
